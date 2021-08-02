@@ -18,6 +18,7 @@
 #      BASED ON: https://github.com/dperson/samba (dperson@gmail.com)
 #===============================================================================
 
+set -x
 set -o nounset                              # Treat unset variables as an error
 
 VOLUME_NAME=${1}
@@ -283,12 +284,12 @@ create_volume_shares
 [[ "${WORKGROUP:-""}" ]] && workgroup "$WORKGROUP"
 [[ "${WIDELINKS:-""}" ]] && widelinks
 
-if [[ $# -ge 1 && -x $(which $1 2>&-) ]]; then
-    exec "$@"
-elif [[ $# -ge 1 ]]; then
-    echo "ERROR: command not found: $1"
-    exit 13
-elif ps -ef | egrep -v grep | grep -q smbd; then
+#if [[ $# -ge 1 && -x $(which $1 2>&-) ]]; then
+#    exec "$@"
+#if [[ $# -ge 1 ]]; then
+#    echo "ERROR: command not found: $1"
+#    exit 13
+if ps -ef | egrep -v grep | grep -q smbd; then
     echo "Service already running, please restart container to apply changes"
 else
     [[ ${NMBD:-""} ]] && ionice -c 3 nmbd -D
