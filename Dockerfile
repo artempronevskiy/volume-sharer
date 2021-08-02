@@ -22,3 +22,4 @@ COPY volume-sharer.sh /usr/bin/
 EXPOSE 137/udp 138/udp 139 445
 
 ENTRYPOINT ["volume-sharer.sh"]
+CMD ["local_uploader_storage"]
